@@ -15,7 +15,7 @@ class Bullet(pygame.sprite.Sprite):
     def __init__(self, init_pos,screen):
         pygame.sprite.Sprite.__init__(self)
         bullet_rect = pygame.Rect(1004, 987, 9, 21)
-        plane_img = pygame.image.load('resource/image/shoot.png')
+        plane_img = pygame.image.load('../../resource/image/shoot.png')
         bullet_img = plane_img.subsurface(bullet_rect)
         self.rect = bullet_img.get_rect()
         self.rect.midbottom = init_pos
@@ -39,17 +39,15 @@ class Player(pygame.sprite.Sprite):
         player_rect.append(pygame.Rect(330, 624, 102, 126))
         player_rect.append(pygame.Rect(330, 498, 102, 126))
         player_rect.append(pygame.Rect(432, 624, 102, 126))
-        self.init_pos = [200, 600]
+        self.initPos = [200, 600]
         # 飞机及子弹图片集合
         self.image =[]
-        plane_img = pygame.image.load('resource/image/shoot.png')
+        plane_img = pygame.image.load('../../resource/image/shoot.png')
         for i in range(len(player_rect)):
             self.image.append(plane_img.subsurface(player_rect[i]).convert_alpha())
 
         self.screen = screen
         self.f = 0
-
-
 
     # 发射子弹
     def shoot(self, bullet_img):
@@ -78,9 +76,9 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.f = self.f + 1
-        if self.f % 30 == 0:
-            self.initPos = self.initPos[0] - 1
-        self.screen.blit(self.image[self.f %10], self.init_pos)
+        if self.f % 100 == 0:
+            self.initPos = [self.initPos[0] - 3,self.initPos[1]]
+        self.screen.blit(self.image[self.f %len(self.image)], self.initPos)
         pass
 
 
@@ -108,8 +106,6 @@ class Enemy(pygame.sprite.Sprite):
         pass
 
 if __name__ == '__main__':
-
-
     # 初始化 pygame
     pygame.init()
     # 设置游戏界面大小、背景图片及标题
@@ -118,12 +114,12 @@ if __name__ == '__main__':
     # 游戏界面标题
     pygame.display.set_caption('飞机大战')
     # 背景图
-    background = pygame.image.load('resource/image/background.png').convert()
+    background = pygame.image.load('../../resource/image/background.png').convert()
     # 游戏循环帧率设置
     clock = pygame.time.Clock()
     # 判断游戏循环退出的参数
     running = True
-
+    p = Player(1, screen)
     while running:
         clock.tick(60)
         for event in pygame.event.get():
@@ -133,7 +129,7 @@ if __name__ == '__main__':
         # 绘制背景
         screen.fill(0)
         screen.blit(background, (0, 0))
-        p = Player(1,screen)
+
         p.update()
         # 更新屏幕
         pygame.display.update()
