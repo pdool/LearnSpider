@@ -3,5 +3,8 @@
 import os
 
 if __name__ == '__main__':
-    os.system()
+    s ="chong;xin"
+    arr = s.split(";")
+    for x in arr:
+        print(x)
     pass
